@@ -53,7 +53,7 @@ class RideQueuePerformanceTest {
         System.out.println("Total Rides Loaded: " + rideCount);
         System.out.println("RideQueue Load Time: " + (loadTime - startTime) / 1_000_000 + " ms");
         System.out.println("RideQueue Processing Time: " + (endTime - loadTime) / 1_000_000 + " ms");
-        System.out.println("RideQueue Total Execution Time: " + (endTime - startTime) / 1_000_000 + " ms");
+        System.out.println("RideQueue Total Execution Time: " + (endTime - startTime) / 1_000_000 + " ms \n \n ");
 
         assertTrue(rideQueue.isEmpty());
     }

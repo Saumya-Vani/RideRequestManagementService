@@ -31,7 +31,7 @@ public class RideQueue<T> {
         if (item == null) {
             throw new IllegalArgumentException("Cannot enqueue null element.");
         }
-        rear = (rear + 1) % capacity;
+        rear += 1;
         arr[rear] = item;
         size++;
     }
@@ -43,7 +43,7 @@ public class RideQueue<T> {
         }
         T item = arr[front];
         arr[front] = null;
-        front = (front + 1) % capacity;
+        front += 1;
         size--;
         return item;
     }
@@ -72,13 +72,13 @@ public class RideQueue<T> {
             return Optional.empty();
         }
         for (int i = 0; i < size; i++) {
-            int index = (front + i) % capacity;
+            int index = front + i;
             if (target.equals(arr[index])) {
-                System.out.println("Search Success: " + target + " found at index " + index);
+                System.out.println("Search Success in Queue: " + target + " found at index " + index);
                 return Optional.of(arr[index]);
             }
         }
-        System.err.println("Search Failure: " + target + " not found.");
+        System.err.println("Search Failurein Queue: " + target + " not found.");
         return Optional.empty();
     }
 
@@ -88,9 +88,9 @@ public class RideQueue<T> {
         }
         boolean found = false;
         for (int i = 0; i < size; i++) {
-            int index = (front + i) % capacity;
+            int index = front + i;
             if (target.equals(arr[index])) {
-                arr[index] = null; // Mark as removed
+                arr[index] = null;
                 found = true;
                 break;
             }

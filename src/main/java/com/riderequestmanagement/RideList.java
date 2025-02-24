@@ -63,9 +63,11 @@ public class RideList<T> {
         }
         for (int i = 0; i < size; i++) {
             if (target.equals(arr[i])) {
+            	System.out.println("Search Success in List: " + target + " found at index " + i);
                 return Optional.of(arr[i]);
             }
         }
+        System.err.println("Search Failure in List: " + target + " not found.");
         return Optional.empty();
     }
     

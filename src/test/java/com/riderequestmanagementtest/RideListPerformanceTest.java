@@ -54,7 +54,7 @@ class RideListPerformanceTest {
         System.out.println("Total Rides Loaded: " + rideCount);
         System.out.println("RideList Load Time: " + (loadTime - startTime) / 1_000_000 + " ms");
         System.out.println("RideList Processing Time: " + (endTime - loadTime) / 1_000_000 + " ms");
-        System.out.println("RideList Total Execution Time: " + (endTime - startTime) / 1_000_000 + " ms");
+        System.out.println("RideList Total Execution Time: " + (endTime - startTime) / 1_000_000 + " ms \n \n");
 
         assertTrue(rideList.isEmpty());
     }

@@ -2,7 +2,7 @@ package com.riderequestmanagementtest;
 
 import org.junit.jupiter.api.Test;
 
-import com.riderequestmanagement.RideDeQueue;
+import com.riderequestmanagement.RideCircularQueue;
 import com.riderequestmanagement.RideRequest;
 
 import java.io.BufferedReader;
@@ -11,16 +11,16 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RideDeQueuePerformanceTest {
+class RideCircularQueuePerformanceTest {
 
     private static final String CSV_FILE = "src/main/resources/ride_requests_large.csv";
 
     @Test
     void testRideDeQueuePerformance() {
-        RideDeQueue<RideRequest> rideQueue = new RideDeQueue<>(100000); 
+        RideCircularQueue<RideRequest> rideQueue = new RideCircularQueue<>(100000); 
         int rideCount = 0;
 
-        System.out.println("Starting RideDeQueue Performance Test...");
+        System.out.println("Starting RideCircularQueue Performance Test...");
 
         long startTime = System.nanoTime();
 
@@ -51,9 +51,9 @@ class RideDeQueuePerformanceTest {
 
         long endTime = System.nanoTime();
         System.out.println("Total Rides Loaded: " + rideCount);
-        System.out.println("RideDeQueue Load Time: " + (loadTime - startTime) / 1_000_000 + " ms");
-        System.out.println("RideDeQueue Processing Time: " + (endTime - loadTime) / 1_000_000 + " ms");
-        System.out.println("RideDeQueue Total Execution Time: " + (endTime - startTime) / 1_000_000 + " ms");
+        System.out.println("RideCircularQueue Load Time: " + (loadTime - startTime) / 1_000_000 + " ms");
+        System.out.println("RideCircularQueue Processing Time: " + (endTime - loadTime) / 1_000_000 + " ms");
+        System.out.println("RideCircularQueue Total Execution Time: " + (endTime - startTime) / 1_000_000 + " ms \n \n");
 
         assertTrue(rideQueue.isEmpty());
     }

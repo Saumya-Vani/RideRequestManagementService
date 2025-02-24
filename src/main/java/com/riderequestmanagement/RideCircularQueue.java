@@ -2,7 +2,7 @@ package com.riderequestmanagement;
 
 import java.util.Optional;
 
-public class RideDeQueue<T> {
+public class RideCircularQueue<T> {
 
     private T[] arr;
     private int front;
@@ -11,7 +11,7 @@ public class RideDeQueue<T> {
     private int capacity;
 
     @SuppressWarnings("unchecked")
-    public RideDeQueue(int capacity) {
+    public RideCircularQueue(int capacity) {
     	if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity must be greater than zero.");
         }
@@ -24,8 +24,7 @@ public class RideDeQueue<T> {
 
     public void enqueue(T item) {
         if (isFull()) {
-        	System.err.println("WARNING: DeQueue Overflow: cannot enqueue, queue is full.");
-            return;
+            throw new RuntimeException("CircularQueue Overflow: Queue is full.");
         }
         if (item == null) {
             throw new IllegalArgumentException("Cannot enqueue null element.");
@@ -33,12 +32,12 @@ public class RideDeQueue<T> {
         rear = (rear + 1) % capacity;
         arr[rear] = item;
         size++;
-        //System.out.println("Added To the Queue: " + item);
     }
+
 
     public T dequeue() {
         if (isEmpty()) {
-            throw new RuntimeException("DeQueue Underflow: cannot dequeue, queue is empty.");
+            throw new RuntimeException("CircularQueue Underflow: cannot dequeue, queue is empty.");
         }
         T item = arr[front];
         arr[front] = null;
@@ -50,7 +49,7 @@ public class RideDeQueue<T> {
 
     public T front() {
         if (isEmpty()) {
-            throw new RuntimeException("Cannot get front, dequeue is empty.");
+            throw new RuntimeException("Cannot get front, CircularQueue is empty.");
         }
         return arr[front];
     }
@@ -74,11 +73,11 @@ public class RideDeQueue<T> {
         for (int i = 0; i < size; i++) {
             int index = (front + i) % capacity;
             if (target.equals(arr[index])) { 
-            	System.out.println("Search Success: " + target + " found at index " + index);
+            	System.out.println("Search Success in Circular Queue: " + target + " found at index " + index);
                 return Optional.of(arr[index]);
             }
         }
-        System.err.println("Search Failure: " + target + " not found.");
+        System.err.println("Search Failure in Circular Queue: " + target + " not found.");
         return Optional.empty();
     }
 
@@ -86,21 +85,31 @@ public class RideDeQueue<T> {
         if (target == null || isEmpty()) {
             return false;
         }
-        boolean found = false;
+        int removeIndex = -1;
         for (int i = 0; i < size; i++) {
             int index = (front + i) % capacity;
             if (target.equals(arr[index])) {
-                arr[index] = null; // Mark as removed
-                found = true;
+                removeIndex = index;
                 break;
             }
         }
-        return found;
+        if (removeIndex == -1) {
+            return false;
+        }
+        for (int i = removeIndex; i != rear; i = (i + 1) % capacity) {
+            int nextIndex = (i + 1) % capacity;
+            arr[i] = arr[nextIndex];
+        }
+        arr[rear] = null;
+        rear = (rear - 1 + capacity) % capacity;
+        size--;
+        return true;
     }
+
 
 	public void clear() {
 		if (isEmpty()) {
-			System.err.println("WARNING: DeQueue is already empty.");
+			System.err.println("WARNING: CircularQueue is already empty.");
 			return;
 		}
 
@@ -110,13 +119,13 @@ public class RideDeQueue<T> {
 		front = 0;
 		rear = -1;
 		size = 0;
-		System.out.println("DeQueue cleared.");
+		System.out.println("CircularQueue cleared.");
 	}
 
     @Override
     public String toString() {
         if (isEmpty()) {
-            return "RideDeQueue is empty.";
+            return "RideCircularQueue is empty.";
         }
         StringBuilder sb = new StringBuilder("Front -> ");
         for (int i = 0; i < size; i++) {

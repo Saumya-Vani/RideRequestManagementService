@@ -5,12 +5,12 @@ import java.util.Optional;
 import java.util.Scanner;
 
 public class RideService {
-    private RideDeQueue<RideRequest> rideDeQue;
+    private RideCircularQueue<RideRequest> rideCircularQueue;
     private RideList<RideRequest> rideList;
     private RideQueue<RideRequest> rideQueue;
 
     public RideService(int capacity) {
-        rideDeQue = new RideDeQueue<>(capacity);
+        rideCircularQueue = new RideCircularQueue<>(capacity);
         rideList = new RideList<>(capacity);
         rideQueue = new RideQueue<>(capacity);
     }
@@ -33,7 +33,7 @@ public class RideService {
                 String[] values = line.split(",");
                 if (values.length < 3) continue;
                 RideRequest ride = new RideRequest(values[0].trim(), values[1].trim(), values[2].trim());
-                rideDeQue.enqueue(ride);
+                rideCircularQueue.enqueue(ride);
                 rideList.add(ride);
                 rideQueue.enqueue(ride);
             }
@@ -44,10 +44,10 @@ public class RideService {
     }
 
     public void processRide() {
-        if (!rideDeQue.isEmpty()) {
-            System.out.println("Processing (Dequeue) Ride from DeQueue: " + rideDeQue.dequeue());
+        if (!rideCircularQueue.isEmpty()) {
+            System.out.println("Processing (Circular queue) Ride from  Circular Queue: " + rideCircularQueue.dequeue());
         } else {
-            System.out.println("No rides in dequeue to process.");
+            System.out.println("No rides in circular queue to process.");
         }
         if (!rideList.isEmpty()) {
             System.out.println("Processing (Remove) Ride from List: " + rideList.remove(0));
@@ -63,17 +63,17 @@ public class RideService {
 
     public void searchRide(String passenger, String pickup, String destination) {
         RideRequest searchRide = new RideRequest(passenger, pickup, destination);
-        Optional<RideRequest> dequeSearch = rideDeQue.search(searchRide);
+        Optional<RideRequest> circQueSearch = rideCircularQueue.search(searchRide);
         Optional<RideRequest> listSearch = rideList.search(searchRide);
         Optional<RideRequest> queueSearch = rideQueue.search(searchRide);
-        System.out.println(dequeSearch.isPresent() ? "Ride Found in DeQue: " + dequeSearch.get() : "Ride Not Found in DeQue");
+        System.out.println(circQueSearch.isPresent() ? "Ride Found in DeQue: " + circQueSearch.get() : "Ride Not Found in Circular Queue");
         System.out.println(listSearch.isPresent() ? "Ride Found in List: " + listSearch.get() : "Ride Not Found in List");
         System.out.println(queueSearch.isPresent() ? "Ride Found in Queue: " + queueSearch.get() : "Ride Not Found in Queue");
     }
 
     public void showStatus() {
-        System.out.println("\nRide DeQue:");
-        System.out.println(rideDeQue);
+        System.out.println("\nRide Circular Queue:");
+        System.out.println(rideCircularQueue);
         System.out.println("\nRide List:");
         System.out.println(rideList);
         System.out.println("\nRide Queue:");
