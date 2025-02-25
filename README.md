@@ -66,24 +66,49 @@ The `RideManager.java` file **orchestrates the program execution**.
 ```
 --- Ride Manager Menu ---
 [1] Load Rides from CSV
-[2] Process Ride
-[3] Search Ride
-[4] Show Status
-[0] Exit
+[2] Process a Ride Request
+[3] Search for a Ride
+[4] Show Current Status of Data Structures
+[0] Exit the Program
 Choose an option: 1
-
-Enter CSV File Name: ride_requests_small.csv
-Successfully loaded 500 rides!
+Enter CSV File Path: src/main/resources/ride_requests.csv
+Successfully loaded ride requests from CSV.
 
 Choose an option: 2
-Processing ride: Alice | New York -> Chicago
+Processing (Circular queue) Ride from  Circular Queue: [31b9620b-4621-411a-9c67-57b6c7743944, Alice, New York -> Chicago]
+Processing (Remove) Ride from List: [31b9620b-4621-411a-9c67-57b6c7743944, Alice, New York -> Chicago]
+Processing (Queue) Ride from Queue: [31b9620b-4621-411a-9c67-57b6c7743944, Alice, New York -> Chicago]
 
 Choose an option: 3
-Enter passenger name to search: Alice
-Ride found in Queue!
+Enter Passenger Name: Frank
+Enter Pickup Location: Austin
+Enter Destination: Denver
+Search Success in Circular Queue: [ef493a4c-0b1c-4df3-be03-58e05ec843ef, Frank, Austin -> Denver] found at index 5
+Search Success in List: [ef493a4c-0b1c-4df3-be03-58e05ec843ef, Frank, Austin -> Denver] found at index 4
+Search Success in Queue: [ef493a4c-0b1c-4df3-be03-58e05ec843ef, Frank, Austin -> Denver] found at index 5
+Ride Found in DeQue: [d2fab583-4911-4464-b07d-35abb3c4d905, Frank, Austin -> Denver]
+Ride Found in List: [d2fab583-4911-4464-b07d-35abb3c4d905, Frank, Austin -> Denver]
+Ride Found in Queue: [d2fab583-4911-4464-b07d-35abb3c4d905, Frank, Austin -> Denver]
+
+Choose an option: 4
+
+Ride Circular Queue:
+Front -> [[06c31b06-86cf-4b6c-a89a-5e3e3134d41b, Bob, Los Angeles -> San Francisco]] -> [[b0b00570-7e6f-4f48-a7ce-387ff4ea2f29, Charlie, Houston -> Miami]] -> [[9aee17f9-f196-4ee2-89c7-cc492af64791, David, Seattle -> Boston]] -> [[57db7750-0dc6-422d-b563-0e9e5ef39124, Eve, Dallas -> Las Vegas]] -> [[d2fab583-4911-4464-b07d-35abb3c4d905, Frank, Austin -> Denver]] -> [[93cffd32-bdd9-425d-ad65-671bd16539a8, Grace, San Diego -> Phoenix]] <- Rear (size=6)
+
+Ride List:
+1. [06c31b06-86cf-4b6c-a89a-5e3e3134d41b, Bob, Los Angeles -> San Francisco]
+2. [b0b00570-7e6f-4f48-a7ce-387ff4ea2f29, Charlie, Houston -> Miami]
+3. [9aee17f9-f196-4ee2-89c7-cc492af64791, David, Seattle -> Boston]
+4. [57db7750-0dc6-422d-b563-0e9e5ef39124, Eve, Dallas -> Las Vegas]
+5. [d2fab583-4911-4464-b07d-35abb3c4d905, Frank, Austin -> Denver]
+6. [93cffd32-bdd9-425d-ad65-671bd16539a8, Grace, San Diego -> Phoenix]
+
+
+Ride Queue:
+Front -> [[06c31b06-86cf-4b6c-a89a-5e3e3134d41b, Bob, Los Angeles -> San Francisco]] -> [[b0b00570-7e6f-4f48-a7ce-387ff4ea2f29, Charlie, Houston -> Miami]] -> [[9aee17f9-f196-4ee2-89c7-cc492af64791, David, Seattle -> Boston]] -> [[57db7750-0dc6-422d-b563-0e9e5ef39124, Eve, Dallas -> Las Vegas]] -> [[d2fab583-4911-4464-b07d-35abb3c4d905, Frank, Austin -> Denver]] -> [[93cffd32-bdd9-425d-ad65-671bd16539a8, Grace, San Diego -> Phoenix]] <- Rear (size=6)
 
 Choose an option: 0
-Exiting...
+Exiting Ride Manager...
 ```
 
 ## Test Classes
