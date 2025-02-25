@@ -85,10 +85,10 @@ public class RideService {
         while (true) {
             System.out.println("\n--- Ride Manager Menu ---");
             System.out.println("[1] Load Rides from CSV");
-            System.out.println("[2] Process Ride");
-            System.out.println("[3] Search Ride");
-            System.out.println("[4] Show Status");
-            System.out.println("[0] Exit");
+            System.out.println("[2] Process a Ride Request");
+            System.out.println("[3] Search for a Ride");
+            System.out.println("[4] Show Current Status of Data Structures");
+            System.out.println("[0] Exit the Program");
             System.out.print("Choose an option: ");
             int choice = sc.nextInt();
             sc.nextLine();
