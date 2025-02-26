@@ -17,6 +17,7 @@ RideRequestManagementSystem/
 │   │   ├── RideCircularQueue.java  # Circular Queue Implementation
 │   │   ├── RideManager.java        # Main method for execution
 │   │   ├── RideService.java        # Menu-driven service logic
+│   │   ├── RideRequest.java        # Core Entity class 
 │   └── test/java/com/riderequestmanagement/
 │   |   ├── RideListTest.java
 │   |   ├── RideQueueTest.java
