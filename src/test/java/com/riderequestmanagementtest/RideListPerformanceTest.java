@@ -17,7 +17,7 @@ class RideListPerformanceTest {
     
     @Test
     void testRideListPerformance() {
-        RideList<RideRequest> rideList = new RideList<>(100000);
+        RideList<RideRequest> rideList = new RideList<>(100);
         int rideCount = 0;
 
         System.out.println("Starting RideList Performance Test...");

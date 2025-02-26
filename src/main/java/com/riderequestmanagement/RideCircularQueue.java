@@ -4,24 +4,30 @@ import java.util.Optional;
 
 public class RideCircularQueue<T> {
 
-    private T[] arr;
-    private int front;
-    private int rear;
-    private int size;
-    private int capacity;
+    private T[] arr; // Array to store queue elements
+    private int front; // Index of the front element
+    private int rear; // Index of the rear element
+    private int size; // Current size of the queue
+    private int capacity; // Maximum capacity of the queue
 
     @SuppressWarnings("unchecked")
     public RideCircularQueue(int capacity) {
-    	if (capacity <= 0) {
+        if (capacity <= 0) {
             throw new IllegalArgumentException("Capacity must be greater than zero.");
         }
         this.capacity = capacity;
-        this.arr = (T[]) new Object[capacity];
+        this.arr = (T[]) new Object[capacity]; // Initialize array with given capacity
         this.front = 0;
         this.rear = -1;
         this.size = 0;
     }
 
+    /**
+     * Enqueues an element to the rear of the circular queue.
+     * @param item The element to be added to the queue.
+     * If the queue is full, a RuntimeException is thrown.
+     * If the item is null, an IllegalArgumentException is thrown.
+     */
     public void enqueue(T item) {
         if (isFull()) {
             throw new RuntimeException("CircularQueue Overflow: Queue is full.");
@@ -29,24 +35,32 @@ public class RideCircularQueue<T> {
         if (item == null) {
             throw new IllegalArgumentException("Cannot enqueue null element.");
         }
-        rear = (rear + 1) % capacity;
+        rear = (rear + 1) % capacity; // Circular increment
         arr[rear] = item;
         size++;
     }
 
-
+    /**
+     * Dequeues an element from the front of the circular queue.
+     * @return The dequeued element.
+     * Throws a RuntimeException if the queue is empty.
+     */
     public T dequeue() {
         if (isEmpty()) {
             throw new RuntimeException("CircularQueue Underflow: cannot dequeue, queue is empty.");
         }
-        T item = arr[front];
-        arr[front] = null;
-        front = (front + 1) % capacity;
+        T item = arr[front]; // Store front element
+        arr[front] = null; // Remove front element
+        front = (front + 1) % capacity; // Circular increment
         size--;
-        //System.out.println("Removed From the Queue: " + item);
         return item;
     }
 
+    /**
+     * Retrieves the front element of the queue without removing it.
+     * @return The front element of the queue.
+     * Throws a RuntimeException if the queue is empty.
+     */
     public T front() {
         if (isEmpty()) {
             throw new RuntimeException("Cannot get front, CircularQueue is empty.");
@@ -54,26 +68,43 @@ public class RideCircularQueue<T> {
         return arr[front];
     }
 
+    /**
+     * Checks if the queue is empty.
+     * @return true if the queue is empty, false otherwise.
+     */
     public boolean isEmpty() {
         return (size == 0);
     }
 
+    /**
+     * Checks if the queue is full.
+     * @return true if the queue is full, false otherwise.
+     */
     public boolean isFull() {
         return (size == capacity);
     }
 
+    /**
+     * Returns the current size of the queue.
+     * @return The number of elements in the queue.
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Searches for a specific element in the queue.
+     * @param target The element to search for.
+     * @return An Optional containing the element if found, otherwise an empty Optional.
+     */
     public Optional<T> search(T target) {
         if (target == null || isEmpty()) {
             return Optional.empty();
         }
         for (int i = 0; i < size; i++) {
             int index = (front + i) % capacity;
-            if (target.equals(arr[index])) { 
-            	System.out.println("Search Success in Circular Queue: " + target + " found at index " + index);
+            if (target.equals(arr[index])) {
+                System.out.println("Search Success in Circular Queue: " + target + " found at index " + index);
                 return Optional.of(arr[index]);
             }
         }
@@ -81,6 +112,11 @@ public class RideCircularQueue<T> {
         return Optional.empty();
     }
 
+    /**
+     * Removes a specific element from the queue without dequeuing others.
+     * @param target The element to remove.
+     * @return true if the element is found and removed, false otherwise.
+     */
     public boolean removeElement(T target) {
         if (target == null || isEmpty()) {
             return false;
@@ -101,27 +137,32 @@ public class RideCircularQueue<T> {
             arr[i] = arr[nextIndex];
         }
         arr[rear] = null;
-        rear = (rear - 1 + capacity) % capacity;
+        rear = (rear - 1 + capacity) % capacity; // Circular decrement
         size--;
         return true;
     }
 
+    /**
+     * Clears all elements from the queue, resetting it to an empty state.
+     */
+    public void clear() {
+        if (isEmpty()) {
+            System.err.println("WARNING: CircularQueue is already empty.");
+            return;
+        }
+        for (int i = 0; i < capacity; i++) {
+            arr[i] = null;
+        }
+        front = 0;
+        rear = -1;
+        size = 0;
+        System.out.println("CircularQueue cleared.");
+    }
 
-	public void clear() {
-		if (isEmpty()) {
-			System.err.println("WARNING: CircularQueue is already empty.");
-			return;
-		}
-
-		for (int i = 0; i < capacity; i++) {
-			arr[i] = null;
-		}
-		front = 0;
-		rear = -1;
-		size = 0;
-		System.out.println("CircularQueue cleared.");
-	}
-
+    /**
+     * Returns a string representation of the queue, displaying its elements in order.
+     * @return A string representation of the queue.
+     */
     @Override
     public String toString() {
         if (isEmpty()) {
